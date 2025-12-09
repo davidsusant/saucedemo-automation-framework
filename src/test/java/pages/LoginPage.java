@@ -15,6 +15,9 @@ public class LoginPage extends BasePage {
     @FindBy(id = "login-button")
     private WebElement loginButton;
 
+    @FindBy(css = "[data-test='error']")
+    private WebElement errorMessage;
+
     public LoginPage(WebDriver webDriver) {
         super(webDriver);
     }
@@ -29,5 +32,13 @@ public class LoginPage extends BasePage {
 
     public void clockLoginButton() {
         click(loginButton);
+    }
+
+    public boolean isErrorMessageDisplayed() {
+        return isElementDisplayed(errorMessage);
+    }
+
+    public String getErrorMessage() {
+        return getText(errorMessage);
     }
 }

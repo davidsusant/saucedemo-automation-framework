@@ -27,7 +27,31 @@ dependencies {
 }
 
 test {
-    useTestNG() {
-        suites 'src/test/java/runners/testng.xml'
+    useTestNG()
+
+    scanForTestClasses = false
+    include '**/runners/**'
+
+    testLogging {
+        events "passed", "skipped", "failed", "started"
+        showStandardStreams = true
+        exceptionFormat = 'full'
+    }
+}
+
+task runFeature(type: Test) {
+    useTestNG()
+
+    def featureName = project.findProperty('feature')
+    def featurePath = featureName ? "src/test/resources/features/${featureName}" : 'src/test/resources/features'
+    systemProperty 'cucumber.features', featurePath
+
+    scanForTestClasses = false
+    include '**/runners/**'
+
+    testLogging {
+        events "passed", "skipped", "failed", "started"
+        showStandardStreams = true
+        exceptionFormat = 'full'
     }
 }

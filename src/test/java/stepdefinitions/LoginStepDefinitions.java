@@ -42,10 +42,12 @@ public class LoginStepDefinitions {
                 "User was not redirected to products page");
     }
 
-    @Then("user should see the products page title")
-    public void user_should_see_the_products_page_title() {
-        productsPage = new ProductsPage(DriverManager.getDriver());
-        Assert.assertEquals(productsPage.getPageTitle(), "Products",
-                "Products page title is incorrect");
+    @Then("error message {string} should be displayed")
+    public void error_message_should_be_displayed(String expectedError) {
+        Assert.assertTrue(loginPage.isErrorMessageDisplayed(),
+                "Error message is not displayed");
+        String actualError = loginPage.getErrorMessage();
+        Assert.assertTrue(actualError.contains(expectedError),
+                "Expected error: " + expectedError + "but got: " + actualError);
     }
 }
